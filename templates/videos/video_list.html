@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+
+
+{% block jumbotron %}
+<div class='container-fluid'>
+<div class="jumbotron">
+<div class='container'>
+<div class='row'>
+<div class='col-sm-6'>
+<h1 style="text-align:center;">{{ obj.title }}</h1>
+</div>
+<div class='col-sm-6'>
+	<h3 style="text-align:center;">Category Info</h3>
+	{{obj.description}}
+</div>
+
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+
+
+
+<div class='col-sm-8 col-sm-offset-2'>
+
+{% if queryset %}
+<table class='table'>
+<thead>
+<th>#</th>
+<th>Lecture</th>
+</thead>
+
+{% for item in queryset %}
+
+<tr><td>{{ forloop.counter }}</td><td>{% if request.user.is_authenticated or item.has_preview %}<a href='{{ item.get_absolute_url }}'>{{ item }}</a> {% else %} {{ item }} {% endif %}</td></tr>
+
+
+{% endfor %}
+</table>
+
+{% else %}
+
+<h3 style='text-align:center;'>Project is coming soon.</h3>
+
+{% endif %}
+</div>
+
+
+
+
+{% endblock %}

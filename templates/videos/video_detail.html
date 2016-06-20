@@ -1,0 +1,558 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% endblock %}
+
+<style>
+{% block style %}
+.reply_comment {
+    display: none;
+}
+
+ul#menu {
+    padding: 0;
+
+}
+ul, ol{
+    margin-top: 12px;
+    /*margin-bottom: none;*/
+}
+
+ul#menu li {
+    display: inline;
+}
+
+ul#menu li a {
+    background-color: transparent;
+    border:solid;
+    color: black;
+    padding: 10px 20px;*/
+    text-decoration: none;
+    border-radius: 1px 1px;
+}
+.bigQuestionBox{
+    height:400px;
+    background-color:#B0B0B0;
+    border-style: solid;
+    border-color: #505050;
+    color:gray;
+    border-top: none;
+}
+.questionOptions{
+    overflow:scroll; 
+    background-color:green;
+    height:50px;
+    border-style: solid;
+    border-color: black;
+    color:green;
+    overflow-y: hidden;
+}
+.questionBox{
+    color:white;
+    text-align: center;
+    font-size: 2em;
+    border-right:none;
+    height:100%;
+}
+.questionBox:hover{
+    background: green; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(green, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(green, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(green, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(green, white);
+}
+
+#textBox {
+    color:black;
+    font-size: 1.5em;
+}
+
+.answerChoice {
+    color:black;
+    font-size: 1.3em;
+}
+.answerChoice:hover {
+    background-color:lightgray;
+    color:black;
+}
+.smallBox{
+
+    top:90%;
+    text-align: center;
+    position:absolute;
+    border: solid black;
+    color:white;
+    font-size: 1.3em;
+}
+#helpBox {
+    width:10%;
+    height:8%;
+    color:black;
+    background: orange; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(orange, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(orange, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(orange, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(orange, white);
+    border-radius: 50%;
+}
+.questionChange {
+    width:10%;
+    height:8%;
+    color:black;
+    background: blue; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(blue, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(blue, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(blue, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(blue, white);
+    border-radius: 50%;
+}
+.questionChange:hover{
+    background: yellow; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(yellow, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(yellow, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(yellow, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(yellow, white);
+}
+#prevBox {
+    left:73%;
+}
+#nextBox {
+    left:85%;
+}
+#infoBox {
+    height:85%;
+    border: solid black;
+    position: absolute;
+    color: white;
+    background: blue; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(blue, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(blue, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(blue, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(blue, white);
+}
+#correctBox {
+    height:85%;
+    position: absolute;
+    border:.2em solid black;
+    color: white;
+    background: green; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(green, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(green, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(green, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(green, white);
+}
+#wrongBox {
+    height:85%;
+    position: absolute;
+    border:.2em solid black;
+    color: white;
+    background: red; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(red, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(red, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(red, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(red, white);
+}
+.closeBox{
+    background: gray;
+    font-size: 1.1em;
+    color: black;
+    text-align: center;
+    height:9%;
+    width: 5%;
+    border:.1em solid black;
+    border-radius: 50%;
+    
+}
+.closeBox:hover{
+    background: gray; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(gray, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(gray, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(gray, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(gray, white);
+}
+.questionClicked{
+    background-color: #66FF66;
+}
+
+/*ul#menu li a:hover {
+    background-color: orange;
+}*/
+/*#box1 a:hover {
+    background-color: pink;
+}*/
+{% endblock %}
+</style>
+
+
+<script>
+{% block jquery %}
+$("#box1").css("background-color","#1DD11D")
+function hideBoxes() {
+    $("#correctBox").hide()
+    $("#wrongBox").hide()
+    $("#infoBox").hide()
+}
+function resetColors() {
+    $("#box1").css("background-color","green")
+    $("#box2").css("background-color","green")
+    $("#box3").css("background-color","green")
+    $("#box4").css("background-color","green")
+}
+function box1(){
+    $("#helpBox").html("Help");
+    prevQuestion = "";
+    if ("{{question2}}") {
+        nextQuestion = "question2";
+    }
+    hideBoxes()
+    resetColors()
+    $("#box1").css("background-color","#1DD11D")
+    $('#helpBox').show()
+    $('#textBox').html("{{question1}}")
+    $('#choiceA').html("A.) {{question1.choiceA}}")
+    $('#choiceB').html("B.) {{question1.choiceB}}")
+    $('#choiceC').html("C.) {{question1.choiceC}}")
+    $('#choiceD').html("D.) {{question1.choiceD}}")
+    $("#infoBox").html("{{question1.help}}")
+    properAnswer="{{question1.correctAnswer}}"
+    $("#wrongBoxInfo").html("Sorry, the correct answer is {{question1.correctAnswer}}. {{question1.answerExplanation}}.")  
+}
+function box2(){
+    $("#helpBox").html("Help");
+    prevQuestion = "question1";
+    if ("{{question3}}") {
+        nextQuestion = "question3";
+    }
+    hideBoxes()
+    resetColors()
+    $("#box2").css("background-color","#1DD11D")
+    $('#helpBox').show()
+    $('#textBox').html("{{question2}}")
+    $('#choiceA').html("A.) {{question2.choiceA}}")
+    $('#choiceB').html("B.) {{question2.choiceB}}")
+    $('#choiceC').html("C.) {{question2.choiceC}}")
+    $('#choiceD').html("D.) {{question2.choiceD}}")
+    $("#infoBox").html("{{question2.help}}")
+    properAnswer="{{question2.correctAnswer}}"
+    $("#wrongBoxInfo").html("Sorry, the correct answer is {{question2.correctAnswer}}. {{question2.answerExplanation}}.")
+}
+function box3(){
+    $("#helpBox").html("Help");
+    prevQuestion = "question2";
+    if ("{{question4}}") {
+        nextQuestion = "question4";
+    }
+    hideBoxes()
+    resetColors()
+    $("#box3").css("background-color","#1DD11D")
+    $('#helpBox').show()
+    $('#textBox').html("{{question3}}")
+    $('#choiceA').html("A.) {{question3.choiceA}}")
+    $('#choiceB').html("B.) {{question3.choiceB}}")
+    $('#choiceC').html("C.) {{question3.choiceC}}")
+    $('#choiceD').html("D.) {{question3.choiceD}}")
+    $("#infoBox").html("{{question3.help}}")
+    properAnswer="{{question3.correctAnswer}}"
+    $("#wrongBoxInfo").html("Sorry, the correct answer is {{question3.correctAnswer}}. {{question3.answerExplanation}}.")
+}
+function box4(){
+    $("#helpBox").html("Help");
+    prevQuestion = "question3";
+    hideBoxes()
+    resetColors()
+    $("#box4").css("background-color","#1DD11D")
+    $('#helpBox').show()
+    $('#textBox').html("{{question4}}")
+    $('#choiceA').html("A.) {{question4.choiceA}}")
+    $('#choiceB').html("B.) {{question4.choiceB}}")
+    $('#choiceC').html("C.) {{question4.choiceC}}")
+    $('#choiceD').html("D.) {{question4.choiceD}}")
+    $("#infoBox").html("{{question4.help}}")
+    properAnswer="{{question4.correctAnswer}}"
+    $("#wrongBoxInfo").html("Sorry, the correct answer is {{question4.correctAnswer}}. {{question4.answerExplanation}}.")
+}
+hideBoxes();
+var helpClicked = false;
+$("#helpBox").click(function(){
+    helpClicked = !helpClicked;
+    $("#infoBox").slideToggle(750);
+    if (helpClicked) {
+        $("#helpBox").html("Close");
+    } else {
+        $("#helpBox").html("Help");
+    }
+});
+var userChoice = "V";
+var properAnswer = "{{question1.correctAnswer}}";
+var nextQuestion = "question2";
+var prevQuestion = "";
+$("#box1").click(function(){
+    box1()
+});
+$("#box2").click(function(){
+    box2()
+});
+$("#box3").click(function(){
+    box3()
+});
+$("#box4").click(function(){
+    box4()
+});
+$("#choiceA").click(function(){
+    userChoice="A"
+    if (userChoice==properAnswer) {
+        $("#correctBox").fadeIn()
+        $("#helpBox").fadeOut()
+    } else {
+        $("#wrongBox").fadeIn()
+        $("#helpBox").fadeOut()
+    }
+});
+$("#choiceB").click(function(){
+    userChoice="B"
+    //window.alert(userChoice)
+    if (userChoice==properAnswer) {
+        $("#correctBox").fadeIn()
+        $("#helpBox").fadeOut()
+    } else {
+        $("#wrongBox").fadeIn()
+        $("#helpBox").fadeOut()
+    }
+});
+$("#choiceC").click(function(){
+    userChoice="C"
+    if (userChoice==properAnswer) {
+        $("#correctBox").fadeIn()
+        $("#helpBox").fadeOut()
+    } else {
+        $("#wrongBox").fadeIn()
+        $("#helpBox").fadeOut()
+    }
+});
+$("#choiceD").click(function(){
+    userChoice="D"
+    //window.alert(userChoice)
+    if (userChoice==properAnswer) {
+        $("#correctBox").fadeIn()
+        $("#helpBox").fadeOut()
+    } else {
+        $("#wrongBox").fadeIn()
+        $("#helpBox").fadeOut()
+    }
+});
+
+$(".closeBox").click(function(){
+    $("#correctBox").fadeOut()
+    $("#wrongBox").fadeOut()
+    $("#infoBox").fadeOut()
+    $("#helpBox").fadeIn()
+});
+
+$("#nextBox").click(function(){
+    if (nextQuestion=="question2") {
+        box2()
+    }else if (nextQuestion=="question3") {
+        box3()
+    }else if (nextQuestion=="question4") {
+        box4()
+    }
+});
+
+$("#prevBox").click(function(){
+    if (prevQuestion=="question1") {
+        box1()
+    }else if (prevQuestion=="question2") {
+        box2()
+    }else if (prevQuestion=="question3") {
+        box3()
+    }
+});
+
+// });
+
+function update_iframe_size(){
+    var parent_id = $("iframe").parent().attr("id");
+    if (parent_id == "main_video") {
+        var parent_class = $("iframe").parent().attr("class");
+        var parent_width = $("iframe").parent().width();
+        console.log(parent_class);
+        var width = $("iframe").css("width"); // $("iframe").width();
+        var height = $("iframe").css("height");
+        var ratio = parseInt(height)/parseInt(width);
+        var new_height = parseInt(parent_width) * ratio
+        $("iframe").css("width", parent_width);
+        $("iframe").css("height", new_height);
+    }
+}
+update_iframe_size()
+$(window).bind("resize", function(){
+    // alert("reized");
+    update_iframe_size();
+});
+$('.reply_btn').click(function(e){
+    e.preventDefault();
+    $(this).next(".reply_comment").fadeToggle();
+    // $(".reply_comment").fadeToggle();
+})
+
+
+
+{% endblock %}
+</script>
+
+
+
+
+{% block content %}
+<div class='row'>
+<div class='col-sm-8'>
+<h1>{{ obj.title }}</h1>
+
+</div>
+
+<div class='col-sm-4' style='text-align:right;'>
+
+{% if obj.get_previous_url %}
+<a href='{{ obj.get_previous_url }}'><i class="fa fa-3x fa-arrow-circle-o-left"></i></a>
+{% endif %}
+{% if obj.get_next_url %}   
+<a href='{{ obj.get_next_url }}'><i class="fa fa-3x fa-arrow-circle-o-right"></i></a>
+{% endif %}
+
+
+
+<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ obj.get_share_link }}"><i class="fa fa-facebook-square fa-3x"></i></a>
+
+
+<a target="_blank" href="https://twitter.com/home?status={{ obj.get_share_message|safe }}"><i class="fa fa-twitter-square fa-3x"></i></a>
+
+<a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ obj.get_share_link }}&title={{ obj.get_share_message|safe }}&summary={{ obj.get_share_message|safe }}&source={{ obj.get_share_link }}">
+<i class="fa fa-linkedin-square fa-3x"></i>
+</a>
+</div>
+
+
+<div class='col-sm-12'>
+<hr/>
+</div>
+
+</div>
+<div class='col-sm-12' id='main_video'>
+{{ obj.embed_code|safe }}
+
+</div>
+
+<!-- {% if obj.tags.all %}
+<div class='col-sm-12'>
+<ul>
+{% for tag in obj.tags.all %}
+<li>{{ tag }}</li>
+{% endfor %}
+<ul>
+</div>
+   <br/><br/><br/> 
+{% endif %} -->
+<h3>Description: </h3>{{obj.description}}
+<hr>
+{% if question1 %}
+<div class = "row">
+    <div class = "questionOptions col-sm-8 col-sm-offset-2">
+        <div class="col-sm-3 questionBox"  id="box1">1</div>
+        {% if question2 %}
+        <div class="col-sm-3 questionBox" id="box2">2</div>
+        {% endif %}
+        {% if question3 %}
+        <div class="col-sm-3 questionBox" id="box3">3</div>
+        {% endif %}
+        {% if question4 %}
+        <div class="col-sm-3 questionBox" id="box4">4</div>
+        {% endif %}
+    </div>
+
+    <div class = "bigQuestionBox col-sm-8 col-sm-offset-2"></br>
+        <div class = "col-sm-10 col-sm-offset-1" id = "textBox"> {{question1}}</div>
+        <div class = "col-sm-10 col-sm-offset-1 answerChoice" id="choiceA">A.) {{question1.choiceA}}</div>
+        <div class = "col-sm-10 col-sm-offset-1 answerChoice" id="choiceB">B.) {{question1.choiceB}}</div>
+        <div class = "col-sm-10 col-sm-offset-1 answerChoice" id="choiceC">C.) {{question1.choiceC}}</div>
+        <div class = "col-sm-10 col-sm-offset-1 answerChoice" id="choiceD">D.) {{question1.choiceD}}</div>
+        <div class = "col-sm-10 col-sm-offset-1 answerChoice" id="infoBox">{{question1.help}}</div>
+        
+
+        <div class = "col-sm-10 col-sm-offset-1 answerChoice" id="correctBox"></br>
+            <div class = "pull-right closeBox">X</div>
+                Correct!
+        </div>
+
+        <div class = "col-sm-10 col-sm-offset-1 answerChoice" id="wrongBox">
+        </br>
+            <div class = "pull-right closeBox">X</div></br>
+            <div id="wrongBoxInfo">
+                Sorry, the correct answer is {{question1.correctAnswer}}. {{question1.answerExplanation}}.
+            </div>
+        </div>
+        <div class = "col-sm-2 smallBox" id="helpBox">Help</div>
+        <div class = "col-sm-2 smallBox questionChange" id="prevBox">Prev</div>
+        <div class = "col-sm-2 smallBox questionChange" id="nextBox">Next</div>
+    </div>
+</div>
+{% endif %}
+
+<br/>
+
+
+
+<br/>
+<hr/>
+
+<div class='row'>
+<div class='col-sm-12'>
+<h1>Comments/Questions</h1>
+<form method="POST" action='{% url "comment_create" %}'>{% csrf_token %}
+<input type='hidden' name='video_id' value='{{ obj.id }}'/>
+<input type='hidden' name='origin_path' value='{{ request.get_full_path }}'/>
+
+{% crispy comment_form comment_form.helper %}
+</form>
+
+
+<br/>
+<br/>
+<table class='table'>
+
+{% for comment in comments %}
+
+<tr><td>{{ comment.get_comment }} 
+<br/><small>via {{ comment.user }} | {{ comment.timestamp|timesince }} ago </small>
+                {% if not comment.is_child %}
+                <ul>
+                {% for child in comment.get_children %}
+                <li>{{ child.get_comment }} 
+                <small>via {{ child.user }}</small>
+
+
+                </li>
+                {% endfor %}
+                </ul>
+                <a href='{{ comment.get_absolute_url }}'>View Thread</a> | <a href='#' class='reply_btn'>Reply</a>
+                <div class='reply_comment'>
+                <form method="POST" action='{% url "comment_create" %}'>{% csrf_token %}
+                <input type='hidden' name='video_id' value='{% url "comment_create" %}'/>
+                <input type='hidden' name='origin_path' value='{{ comment.get_origin }}'/>
+                <input type='hidden' name='parent_id' value='{{ comment.id }}' />
+                {% crispy comment_form comment_form.helper %}
+                
+                </form>
+                </div>
+                {% endif %}
+
+
+</td></tr>
+
+{% endfor %}
+
+</table>
+</div>
+</div>
+
+
+{% endblock %}
