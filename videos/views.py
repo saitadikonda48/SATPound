@@ -42,7 +42,6 @@ def video_detail(request, cat_slug, vid_slug):
 		question4 = ""
 	
 
-	print question4
 	page_view.send(request.user, 
 				page_path=request.get_full_path(), 
 				primary_obj=obj,
@@ -97,5 +96,4 @@ def category_detail(request, cat_slug):
 				primary_obj=obj)
 
 
-	print queryset
 	return render(request, "videos/video_list.html", {"obj": obj, "queryset": queryset})

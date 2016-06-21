@@ -46,9 +46,7 @@ def get_notifications_ajax(request):
 			"notifications": notes,
 			"count": count,
 		}
-		print data
 		json_data = json.dumps(data)
-		print json_data
 		return HttpResponse(json_data, content_type='application/json')
 	else:
 		raise Http404

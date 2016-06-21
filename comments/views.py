@@ -34,7 +34,6 @@ def comment_create_view(request):
 		except:
 			video = None
 
-		print video
 		parent_comment = None
 		if parent_id is not None:
 			try:
@@ -85,7 +84,6 @@ def comment_create_view(request):
 				messages.success(request, "Thank you for the comment.")
 				return HttpResponseRedirect(new_comment.get_absolute_url())
 		else:
-			print origin_path
 			messages.error(request, "There was an error with your comment.")
 			return HttpResponseRedirect(origin_path)
 

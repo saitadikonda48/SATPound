@@ -94,7 +94,6 @@ def upgrade(request):
 			messages.error(request, "There was an error with your account. Please contact us.")
 			return redirect("contact_us")
 		merchant_customer_id = merchant_obj.customer_id
-		print merchant_customer_id
 		client_token = braintree.ClientToken.generate({
 				"customer_id": merchant_customer_id
 			})
