@@ -107,12 +107,12 @@ USE_L10N = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = os.path.join('/Users/saitadikonda/Desktop/srvup/static/static_root'),
+STATICFILES_DIRS = os.path.join('/Users/saitadikonda/Desktop/srvup/static/static_root')
     # os.path.join(os.path.dirname(BASE_DIR), "srvup/src/static", "static_dirs"),
     #'/Users/jmitch/Desktop/srvup/static/static_dirs/', #on mac
     #'\Users\jmitch\Desktop\srvup\static\static_dirs\', somethingl ike this on windows
     #'/var/www/static/',
-)
+
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "static_root")
 
