@@ -108,7 +108,7 @@ USE_L10N = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(BASE_DIR), "static", "static_root"),
+    os.path.join(os.path.dirname(BASE_DIR), "src","static", "static_dirs"),
     #'/Users/jmitch/Desktop/srvup/static/static_dirs/', #on mac
     #'\Users\jmitch\Desktop\srvup\static\static_dirs\', somethingl ike this on windows
     #'/var/www/static/',
@@ -129,9 +129,9 @@ BRAINTREE_MERCHANT_ID="8cs4q5837bxfx682"
 BRAINTREE_PUBLIC_KEY="vdvjqw2btzsgskps"
 BRAINTREE_PRIVATE_KEY="20711ff451df053f02574e1b8be06cfd"
 
-import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+# import dj_database_url
+# DATABASES['default'] = dj_database_url.config()
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
