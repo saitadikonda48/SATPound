@@ -54,13 +54,13 @@ def update_membership_dates(sender, new_date_start, **kwargs):
 	current_date_end = membership.date_end
 	if current_date_end >= new_date_start:
 		#append new_start date plus offset to date end of the instance
-		membership.date_end = current_date_end + datetime.timedelta(days=30, hours=10)
+		membership.date_end = current_date_end + datetime.timedelta(days=365, hours=10)
 		membership.save()
 		
 	else:
 		#set a new start date and new end date with the same offset.
 		membership.date_start = new_date_start
-		membership.date_end = new_date_start + datetime.timedelta(days=30, hours=10)
+		membership.date_end = new_date_start + datetime.timedelta(days=365, hours=10)
 		membership.save()
 	# membership.update_status()
 

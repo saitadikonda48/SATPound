@@ -15,15 +15,14 @@
 <input class='btn btn-default {{ submit_btn_class }}' type='submit' value='{{ submit_btn }}'/>
 </form>
 
-{% if extra_form_link %}
-<br/>
-<p>
-{{ extra_form_link|safe }}
-</p>
-{% endif %}
+
 
 
 {% if title == "Login" %}
+<br/>
+<p>
+Upgrade your account today <a href='{% url "account_upgrade" %}'>here!</a>
+</p>
 <br/>
 <p>
 Need Account? <a href='{% url "register" %}'>Register now</a>.
