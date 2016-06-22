@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'lwi1a%uc6h1h0j@#3a1ys(&^m!*q!ulqtfbm3ts)_vsud^*=k%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -99,7 +99,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_L10N = True
-
 # USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -132,6 +131,6 @@ BRAINTREE_PRIVATE_KEY="20711ff451df053f02574e1b8be06cfd"
 # import dj_database_url
 # DATABASES['default'] = dj_database_url.config()
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-ALLOWED_HOSTS = ['*']
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    ALLOWED_HOSTS = ['*']
