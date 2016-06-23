@@ -88,4 +88,5 @@ def comment_create_view(request):
 			return HttpResponseRedirect(origin_path)
 
 	else:
-		raise Http404
+		messages.warning(request, "You must be logged in to comment.")
+		return HttpResponseRedirect("/login")
