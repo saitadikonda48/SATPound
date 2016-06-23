@@ -43,9 +43,6 @@
 		
 			{% for vid in recent_videos %}
 			<a href="{{ vid.get_absolute_url }}">{{ vid.title }}</a><br/>
-				{% if forloop.counter == 1 %}
-				<a href="{{ vid.get_absolute_url }}"><img src="{{ vid.category.get_image_url }}" class='img-responsive'/></a><br/>
-				{% endif %}
 			{% endfor %}
 			
 
@@ -66,9 +63,6 @@
 			<h1>Popular Videos</h1>
 			{% for vid in popular_videos %}
 			<a href="{{ vid.get_absolute_url }}">{{ vid.title }}</a><br/>
-			{% if forloop.counter == 1 %}
-			<a href="{{ vid.get_absolute_url }}"><img src="{{ vid.category.get_image_url }}" class='img-responsive'/></a><br/>
-			{% endif %}
 			{% endfor %}
 			<hr/>
 		</div>
