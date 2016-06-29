@@ -24,8 +24,8 @@ DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-# ALLOWED_HOSTS = []
-FULL_DOMAIN_NAME = "http://www.testpound.com"
+ALLOWED_HOSTS = ['*']
+# FULL_DOMAIN_NAME = "http://www.testpound.com"
 
 LOGIN_URL = "/login"
 
@@ -84,8 +84,12 @@ WSGI_APPLICATION = 'srvup.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'satpound',
+        'USER': 'stadikonda6',
+        'PASSWORD': 'G01dc01n',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -128,9 +132,7 @@ BRAINTREE_MERCHANT_ID="8cs4q5837bxfx682"
 BRAINTREE_PUBLIC_KEY="vdvjqw2btzsgskps"
 BRAINTREE_PRIVATE_KEY="20711ff451df053f02574e1b8be06cfd"
 
-# import dj_database_url
-# DATABASES['default'] = dj_database_url.config()
-
-if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    ALLOWED_HOSTS = ['*']
+# # Update database configuration with $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
