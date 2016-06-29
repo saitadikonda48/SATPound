@@ -20,10 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'lwi1a%uc6h1h0j@#3a1ys(&^m!*q!ulqtfbm3ts)_vsud^*=k%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-# FULL_DOMAIN_NAME = "http://www.testpound.com"
+# TEMPLATE_DEBUG = True
+
+ALLOWED_HOSTS = ['www.satpound.com']
+FULL_DOMAIN_NAME = "http://www.satpound.com"
 
 LOGIN_URL = "/login"
 
@@ -82,12 +84,8 @@ WSGI_APPLICATION = 'srvup.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'satpound',
-        'USER': 'stadikonda6',
-        'PASSWORD': 'G01dc01n',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -104,21 +102,19 @@ USE_L10N = True
 # USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+# https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
+    os.path.join(os.path.dirname(BASE_DIR), "src","static", "static_dirs"),
+    #'/Users/jmitch/Desktop/srvup/static/static_dirs/', #on mac
+    #'\Users\jmitch\Desktop\srvup\static\static_dirs\', somethingl ike this on windows
+    #'/var/www/static/',
 )
 
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "static_root")
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
@@ -133,6 +129,6 @@ BRAINTREE_PUBLIC_KEY="vdvjqw2btzsgskps"
 BRAINTREE_PRIVATE_KEY="20711ff451df053f02574e1b8be06cfd"
 
 # # Update database configuration with $DATABASE_URL.
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+# import dj_database_url
+# db_from_env = dj_database_url.config(conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
