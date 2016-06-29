@@ -106,19 +106,21 @@ USE_L10N = True
 # USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
+# Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(BASE_DIR), "src","static", "static_dirs"),
-    #'/Users/jmitch/Desktop/srvup/static/static_dirs/', #on mac
-    #'\Users\jmitch\Desktop\srvup\static\static_dirs\', somethingl ike this on windows
-    #'/var/www/static/',
+    os.path.join(PROJECT_ROOT, 'static'),
 )
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "static_root")
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
 
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, "templates"),
 )
