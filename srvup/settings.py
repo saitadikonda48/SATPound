@@ -20,9 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'lwi1a%uc6h1h0j@#3a1ys(&^m!*q!ulqtfbm3ts)_vsud^*=k%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-TEMPLATE_DEBUG = True
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 # FULL_DOMAIN_NAME = "http://www.testpound.com"
