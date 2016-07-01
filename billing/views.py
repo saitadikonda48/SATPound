@@ -13,12 +13,14 @@ import random
 
 import braintree
 
-braintree.Configuration.configure(braintree.Environment.Sandbox,
-                                  merchant_id=settings.BRAINTREE_MERCHANT_ID,
-                                  public_key=settings.BRAINTREE_PUBLIC_KEY,
-                                  private_key=settings.BRAINTREE_PRIVATE_KEY)
+PLAN_ID = "gh6t"
 
-PLAN_ID = "nr5g"
+braintree.Configuration.configure(
+    braintree.Environment.Production,
+    "hybtdcqkwq24q5h3",
+    "np66bnqvq4g2hg67",
+    "48357aabb469d1314b89fd9f84e5ea83"
+)
 
 def get_or_create_model_transaction(user, braintree_transaction):
 	trans_id = braintree_transaction.id
@@ -152,6 +154,7 @@ def upgrade(request):
 					membership_dates_update.send(membership_instance, new_date_start=timezone.now())
 					return redirect("billing_history")
 				elif did_create_sub and not did_update_sub:
+					print create_sub
 					merchant_obj.subscription_id = create_sub.subscription.id
 					merchant_obj.plan_id = PLAN_ID
 					merchant_obj.save()

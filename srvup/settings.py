@@ -124,9 +124,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static", "media")
 
 # Braintree information
-BRAINTREE_MERCHANT_ID="8cs4q5837bxfx682"
-BRAINTREE_PUBLIC_KEY="vdvjqw2btzsgskps"
-BRAINTREE_PRIVATE_KEY="20711ff451df053f02574e1b8be06cfd"
+BRAINTREE_MERCHANT_ID="hybtdcqkwq24q5h3"
+BRAINTREE_PUBLIC_KEY="np66bnqvq4g2hg67"
+BRAINTREE_PRIVATE_KEY="48357aabb469d1314b89fd9f84e5ea83"
 
 # # Update database configuration with $DATABASE_URL.
 # import dj_database_url

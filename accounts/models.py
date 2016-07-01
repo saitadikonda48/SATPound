@@ -160,8 +160,9 @@ def new_user_receiver(sender, instance, created, *args, **kwargs):
     try:
         merchant_obj = UserMerchantId.objects.get(user=instance)
     except:
+        
         new_customer_result = braintree.Customer.create({
-                "email": instance.email
+                "email": instance.email,
             })
         if new_customer_result.is_success:
             merchant_obj, created = UserMerchantId.objects.get_or_create(user=instance)
