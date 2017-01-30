@@ -1,4 +1,4 @@
-# satpound
+# SATPound
 SAT preparation website
 
 ## Link to Website
